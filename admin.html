@@ -66,7 +66,7 @@ window.clearFlat=()=>{$("flatId").value="";$("residentName").value="";$("residen
 
 window.saveFlat=async()=>{
  const id=$("flatId").value.trim().toUpperCase();if(!id){$("flatStatusMsg").textContent="Enter a flat number.";return;}
- try{await setDoc(doc(db,"flats",id),{flatNumber:id,residentName:$("residentName").value.trim(),pin:$("residentPin").value.trim(),status:$("flatStatus").value},{merge:true});$("flatStatusMsg").textContent="✓ Flat saved."; $("flatStatusMsg").className="status ok";await loadDashboard();}
+ try{await setDoc(doc(db,"flats",id),{flatNumber:id,residentName:$("residentName").value.trim(),pin:$("residentPin").value.trim(),status:$("flatStatus").value},{merge:true});if($("flatStatus").value==="active"){const md=doc(db,"maintenance","2026-10_"+id);const existing=await getDoc(md);if(!existing.exists()){await setDoc(md,{flatNumber:id,month:"October 2026",amount:1565,dueDate:"10 Oct 2026",status:"pending"});}}$("flatStatusMsg").textContent="✓ Flat saved and October maintenance checked."; $("flatStatusMsg").className="status ok";await loadDashboard();}
  catch(e){$("flatStatusMsg").textContent="Error: "+e.message;$("flatStatusMsg").className="status err";}
 };
 
