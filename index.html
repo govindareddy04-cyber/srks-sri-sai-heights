@@ -40,7 +40,7 @@
     <div class="login-logo">🏠</div>
     <h2>SRK'S SRI SAI HEIGHTS</h2>
     <div class="login-sub">Resident Login</div>
-    <div class="field"><label>Flat Number</label><input id="loginFlat" type="text" inputmode="numeric" placeholder="Example: 303"></div>
+    <div class="field"><label>Flat Number</label><input id="loginFlat" type="text" inputmode="text" autocapitalize="characters" autocomplete="off" placeholder="Example: 303 or G1"></div>
     <div class="field"><label>PIN</label><input id="loginPin" type="password" inputmode="numeric" maxlength="6" placeholder="Enter PIN"></div>
     <div id="loginError" class="login-error"></div>
     <button id="loginBtn" class="btn">Login</button>
@@ -121,7 +121,7 @@ document.getElementById("loginBtn").addEventListener("click",login);
 document.getElementById("loginPin").addEventListener("keydown",e=>{if(e.key==="Enter")login();});
 
 async function login(){
- const flat=document.getElementById("loginFlat").value.trim(),pin=document.getElementById("loginPin").value.trim(),err=document.getElementById("loginError");
+ const flat=document.getElementById("loginFlat").value.trim().toUpperCase(),pin=document.getElementById("loginPin").value.trim(),err=document.getElementById("loginError");
  err.style.display="none";
  if(!flat||!pin){err.textContent="Please enter Flat Number and PIN.";err.style.display="block";return;}
  const btn=document.getElementById("loginBtn");btn.disabled=true;btn.textContent="Checking…";
