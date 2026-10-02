@@ -1,88 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#1769e0"><link rel="manifest" href="./manifest.webmanifest">
 <title>SRK's Sri Sai Heights - Admin</title>
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f5f7fb;color:#14213d}.app{max-width:560px;margin:auto;min-height:100vh}
-.top{background:#1769e0;color:#fff;padding:22px 18px 24px;border-radius:0 0 24px 24px}.top h1{font-size:20px;margin:0 0 4px}.top p{margin:0;font-size:13px;opacity:.9}.content{padding:15px 15px 30px}
-.card{background:#fff;border-radius:16px;padding:16px;margin-bottom:13px;box-shadow:0 2px 10px #0001}.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{background:#fff;border-radius:15px;padding:15px;box-shadow:0 2px 10px #0001}.stat b{font-size:22px;display:block;margin-top:4px}
-.muted{font-size:12px;color:#6d7789}.section-title{font-size:18px;font-weight:700;margin:8px 0 13px}.btn{border:0;border-radius:11px;padding:13px 15px;background:#1769e0;color:#fff;font-weight:700;font-size:14px}.btn2{border:1px solid #d8dee9;border-radius:11px;padding:12px 14px;background:#fff;color:#1769e0;font-weight:700}
-.actions{display:flex;gap:8px;flex-wrap:wrap}.actions .btn,.actions .btn2{flex:1}.field{margin-bottom:11px}.field label{display:block;font-size:12px;font-weight:700;margin-bottom:5px}.field input,.field select,.field textarea{width:100%;padding:12px;border:1px solid #d9dee8;border-radius:10px;font-size:15px;background:#fff}.field textarea{min-height:85px;resize:vertical}
-.row{display:flex;justify-content:space-between;align-items:center;gap:8px}.flatrow{padding:12px 0;border-bottom:1px solid #edf0f4}.badge{padding:5px 9px;border-radius:18px;font-size:10px;font-weight:700}.paid{background:#def5e5;color:#13813b}.pending{background:#fff0dc;color:#c96400}.vacant{background:#edf0f5;color:#687386}.status{font-size:12px;margin-top:8px}.ok{color:#13813b}.err{color:#b42318}
-.login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:#f5f7fb}.login-card{width:100%;max-width:420px;background:#fff;border-radius:20px;padding:27px 22px;box-shadow:0 4px 20px #0001}.login-logo{width:64px;height:64px;border-radius:18px;background:#1769e0;color:#fff;display:grid;place-items:center;font-size:29px;margin:0 auto 17px}.login h2{text-align:center;margin:0 0 5px}.login-sub{text-align:center;color:#6d7789;font-size:13px;margin-bottom:22px}.login-error{display:none;color:#b42318;font-size:13px;margin:8px 0}
-</style>
-</head>
-<body>
-<div id="login" class="login"><div class="login-card"><div class="login-logo">🔐</div><h2>Admin Dashboard</h2><div class="login-sub">SRK'S SRI SAI HEIGHTS</div>
-<div class="field"><label>Admin PIN</label><input id="adminPin" type="password" inputmode="numeric" placeholder="Enter admin PIN"></div>
-<div id="loginErr" class="login-error"></div><button class="btn" style="width:100%" onclick="adminLogin()">Login</button>
-<div class="muted" style="text-align:center;margin-top:12px">Current test PIN: 9999</div></div></div>
-
-<div id="dashboard" class="app" style="display:none"><header class="top"><button onclick="logout()" style="float:right;border:0;border-radius:8px;padding:7px 10px;color:#1769e0;background:#fff;font-weight:700">Logout</button><h1>SRK'S SRI SAI HEIGHTS</h1><p>Admin Dashboard</p></header>
-<main class="content">
-<div class="stats"><div class="stat"><span class="muted">Total Flats</span><b id="totalFlats">—</b></div><div class="stat"><span class="muted">Paid</span><b id="paidCount">—</b></div><div class="stat"><span class="muted">Pending</span><b id="pendingCount">—</b></div><div class="stat"><span class="muted">Collection</span><b id="collection">₹—</b></div></div>
-
-<div class="card"><div class="section-title">Maintenance</div><div class="actions"><button class="btn" onclick="createBills()">Create October ₹1,565 Bills</button><button class="btn2" onclick="loadDashboard()">Refresh</button></div><div id="actionStatus" class="status muted">Ready.</div></div>
-
-<div class="card"><div class="section-title">Add / Edit Flat</div>
-<div class="field"><label>Flat Number</label><input id="flatId" placeholder="e.g. 303"></div>
-<div class="field"><label>Resident Name</label><input id="residentName" placeholder="Resident name"></div>
-<div class="field"><label>PIN</label><input id="residentPin" inputmode="numeric" maxlength="6" placeholder="PIN"></div>
-<div class="field"><label>Status</label><select id="flatStatus"><option value="active">Active</option><option value="inactive">Inactive</option></select></div>
-<div class="actions"><button class="btn" onclick="saveFlat()">Save Flat</button><button class="btn2" onclick="clearFlat()">Clear</button></div><div id="flatStatusMsg" class="status muted"></div>
-</div>
-
-<div class="card"><div class="section-title">Add Announcement</div>
-<div class="field"><label>Title</label><input id="annTitle" placeholder="Announcement title"></div>
-<div class="field"><label>Message</label><textarea id="annMessage" placeholder="Announcement message"></textarea></div>
-<div class="actions"><button class="btn" onclick="saveAnnouncement()">Publish</button></div><div id="annStatus" class="status muted"></div></div>
-
-<div class="section-title">All Flats</div><div class="card" id="flatList">Loading…</div>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f5f7fb;color:#14213d}.app{max-width:650px;margin:auto;min-height:100vh}.top{background:#1769e0;color:#fff;padding:20px 17px 23px;border-radius:0 0 24px 24px}.top h1{margin:0;font-size:20px}.top p{margin:5px 0 0;font-size:13px}.content{padding:15px}.card{background:#fff;border-radius:16px;padding:16px;margin-bottom:13px;box-shadow:0 2px 10px #0001}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{padding:14px;border-radius:14px;background:#f8faff}.stat small{color:#687386}.stat b{display:block;font-size:20px;margin-top:5px}.title{font-size:18px;font-weight:700;margin:5px 0 12px}.field{margin-bottom:11px}.field label{display:block;font-size:12px;font-weight:700;margin-bottom:5px}.field input,.field textarea,.field select{width:100%;padding:12px;border:1px solid #d7ddea;border-radius:10px;font-size:15px}.field textarea{min-height:80px}.btn{border:0;border-radius:11px;padding:12px 14px;background:#1769e0;color:#fff;font-weight:700}.btn2{border:1px solid #d7ddea;border-radius:11px;padding:11px 14px;background:#fff;color:#1769e0;font-weight:700}.actions{display:flex;gap:8px;flex-wrap:wrap}.actions>*{flex:1}.muted{font-size:12px;color:#687386}.ok{color:#13813b}.err{color:#b42318}.row{display:flex;justify-content:space-between;align-items:center;gap:8px}.badge{padding:5px 9px;border-radius:20px;font-size:10px;font-weight:700}.paid{background:#def5e5;color:#13813b}.pending{background:#fff0dc;color:#c96400}.item{padding:11px 0;border-bottom:1px solid #edf0f4}.item:last-child{border:0}.login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}.login-card{width:100%;max-width:420px;background:#fff;padding:25px;border-radius:20px;box-shadow:0 4px 20px #0001}
+</style></head><body>
+<div id="login" class="login"><div class="login-card"><div style="font-size:40px;text-align:center">🔐</div><h2 style="text-align:center">Admin Dashboard</h2><p class="muted" style="text-align:center">SRK'S SRI SAI HEIGHTS</p><div class="field"><label>Admin PIN</label><input id="adminPin" type="password" inputmode="numeric" placeholder="Enter admin PIN"></div><div id="loginErr" class="err"></div><button class="btn" style="width:100%" onclick="adminLogin()">Login</button><p class="muted" style="text-align:center">Current test PIN: 9999</p></div></div>
+<div id="dashboard" class="app" style="display:none"><header class="top"><button onclick="logout()" style="float:right;border:0;border-radius:8px;padding:7px 10px;color:#1769e0;background:#fff;font-weight:700">Logout</button><h1>SRK'S SRI SAI HEIGHTS</h1><p>Admin Dashboard</p></header><main class="content">
+<div class="grid"><div class="stat"><small>Flats</small><b id="totalFlats">—</b></div><div class="stat"><small>Paid</small><b id="paidCount">—</b></div><div class="stat"><small>Pending</small><b id="pendingCount">—</b></div><div class="stat"><small>Collection</small><b id="collection">₹—</b></div></div>
+<div class="card"><div class="title">Maintenance</div><div class="field"><label>Monthly Amount</label><input id="billAmount" type="number" value="1565"></div><div class="actions"><button class="btn" onclick="createBills()">Create / Update Current Month Bills</button><button class="btn2" onclick="loadDashboard()">Refresh</button></div><div id="actionStatus" class="muted" style="margin-top:8px">Ready.</div></div>
+<div class="card"><div class="title">Add / Edit Flat</div><div class="field"><label>Flat Number</label><input id="flatId" placeholder="e.g. G4"></div><div class="field"><label>Resident Name</label><input id="residentName"></div><div class="field"><label>PIN</label><input id="residentPin" inputmode="numeric"></div><div class="field"><label>Status</label><select id="flatStatus"><option value="active">Active</option><option value="inactive">Inactive</option></select></div><div class="actions"><button class="btn" onclick="saveFlat()">Save Flat</button><button class="btn2" onclick="clearFlat()">Clear</button></div><div id="flatStatusMsg" class="muted" style="margin-top:8px"></div></div>
+<div class="card"><div class="title">Payment Management</div><div class="field"><label>Flat Number</label><input id="payFlat" placeholder="e.g. G4"></div><div class="field"><label>Month</label><input id="payMonth" value="October 2026"></div><div class="field"><label>Payment Status</label><select id="payStatus"><option>paid</option><option>pending</option></select></div><div class="field"><label>Payment Reference (optional)</label><input id="payRef"></div><div class="actions"><button class="btn" onclick="updatePayment()">Update Payment</button></div><div id="payMsg" class="muted" style="margin-top:8px"></div></div>
+<div class="card"><div class="title">Announcement</div><div class="field"><label>Title</label><input id="annTitle"></div><div class="field"><label>Message</label><textarea id="annMessage"></textarea></div><button class="btn" onclick="saveAnnouncement()">Publish Announcement</button><div id="annStatus" class="muted" style="margin-top:8px"></div></div>
+<div class="card"><div class="title">Complaints</div><div id="complaintList">Loading…</div></div>
+<div class="card"><div class="title">Expenses</div><div class="field"><label>Category</label><input id="expCategory" placeholder="Security / Cleaning / Repair"></div><div class="field"><label>Description</label><input id="expDescription"></div><div class="field"><label>Amount</label><input id="expAmount" type="number"></div><div class="actions"><button class="btn" onclick="saveExpense()">Add Expense</button></div><div id="expMsg" class="muted" style="margin-top:8px"></div><div id="expenseList" style="margin-top:10px"></div></div>
+<div class="title">All Flats</div><div class="card" id="flatList">Loading…</div>
 </main></div>
-
 <script type="module">
-import {initializeApp} from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
-import {getFirestore,collection,getDocs,doc,getDoc,setDoc,addDoc,serverTimestamp} from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
+import{initializeApp}from"https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
+import{getFirestore,collection,getDocs,doc,getDoc,setDoc,addDoc,query,orderBy,serverTimestamp,updateDoc}from"https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
 const firebaseConfig={apiKey:"AIzaSyAIPpzzWEOTs5SW_CnV6D2wkc5k2Y5BxIM",authDomain:"srk-sri-sai-heights.firebaseapp.com",projectId:"srk-sri-sai-heights",storageBucket:"srk-sri-sai-heights.firebasestorage.app",messagingSenderId:"501758531689",appId:"1:501758531689:web:d88a6ffbd3409a868ceaf8"};
-const db=getFirestore(initializeApp(firebaseConfig));const ADMIN_PIN="9999";const $=id=>document.getElementById(id);
-
-window.adminLogin=()=>{if($("adminPin").value!==ADMIN_PIN){$("loginErr").textContent="Incorrect admin PIN.";$("loginErr").style.display="block";return;}$("login").style.display="none";$("dashboard").style.display="block";loadDashboard();};
-window.logout=()=>{$("dashboard").style.display="none";$("login").style.display="flex";$("adminPin").value="";};
-
-window.loadDashboard=async()=>{
- $("flatList").textContent="Loading…";
- try{
-  const fs=await getDocs(collection(db,"flats"));let paid=0,pending=0,total=0,rows="";
-  const flats=fs.docs.map(x=>({id:x.id,...x.data()})).sort((a,b)=>a.id.localeCompare(b.id,undefined,{numeric:true}));
-  for(const f of flats){const ms=await getDoc(doc(db,"maintenance","2026-10_"+f.id));const m=ms.exists()?ms.data():null;const st=m?.status||"not created",amt=Number(m?.amount||0);if(st==="paid"){paid++;total+=amt}if(st==="pending")pending++;const cls=st==="paid"?"paid":st==="pending"?"pending":"vacant";rows+=`<div class="flatrow"><div class="row"><div><b>Flat ${f.id}</b><div class="muted">${esc(f.residentName||"No resident")} · PIN ${esc(f.pin||"—")}</div></div><span class="badge ${cls}">${st.toUpperCase()}</span></div><div class="actions" style="margin-top:7px"><button class="btn2" onclick="editFlat('${esc(f.id)}')">Edit</button></div></div>`;}
-  $("totalFlats").textContent=flats.length;$("paidCount").textContent=paid;$("pendingCount").textContent=pending;$("collection").textContent="₹"+total.toLocaleString("en-IN");$("flatList").innerHTML=rows||"No flats found.";
- }catch(e){$("flatList").innerHTML='<span class="err">Error: '+esc(e.message)+'</span>';}
-};
-
-window.editFlat=async id=>{const s=await getDoc(doc(db,"flats",id));if(!s.exists())return;const d=s.data();$("flatId").value=id;$("residentName").value=d.residentName||"";$("residentPin").value=d.pin||"";$("flatStatus").value=d.status||"active";window.scrollTo({top:document.body.scrollHeight/3,behavior:"smooth"});};
-window.clearFlat=()=>{$("flatId").value="";$("residentName").value="";$("residentPin").value="";$("flatStatus").value="active";};
-
-window.saveFlat=async()=>{
- const id=$("flatId").value.trim().toUpperCase();if(!id){$("flatStatusMsg").textContent="Enter a flat number.";return;}
- try{await setDoc(doc(db,"flats",id),{flatNumber:id,residentName:$("residentName").value.trim(),pin:$("residentPin").value.trim(),status:$("flatStatus").value},{merge:true});if($("flatStatus").value==="active"){const md=doc(db,"maintenance","2026-10_"+id);const existing=await getDoc(md);if(!existing.exists()){await setDoc(md,{flatNumber:id,month:"October 2026",amount:1565,dueDate:"10 Oct 2026",status:"pending"});}}$("flatStatusMsg").textContent="✓ Flat saved and October maintenance checked."; $("flatStatusMsg").className="status ok";await loadDashboard();}
- catch(e){$("flatStatusMsg").textContent="Error: "+e.message;$("flatStatusMsg").className="status err";}
-};
-
-window.createBills=async()=>{
- $("actionStatus").textContent="Creating October bills…";
- try{const fs=await getDocs(collection(db,"flats"));let n=0;for(const f of fs.docs){await setDoc(doc(db,"maintenance","2026-10_"+f.id),{flatNumber:f.id,month:"October 2026",amount:1565,dueDate:"10 Oct 2026",status:"pending"},{merge:true});n++;}$("actionStatus").textContent=`✓ ${n} October records created/updated.`;$("actionStatus").className="status ok";await loadDashboard();}
- catch(e){$("actionStatus").textContent="Error: "+e.message;$("actionStatus").className="status err";}
-};
-
-window.saveAnnouncement=async()=>{
- const title=$("annTitle").value.trim(),message=$("annMessage").value.trim();if(!title||!message){$("annStatus").textContent="Enter title and message.";return;}
- try{await addDoc(collection(db,"announcements"),{title,message,date:new Date().toLocaleDateString("en-GB",{day:"2-digit",month:"short",year:"numeric"}),createdAt:serverTimestamp()});$("annTitle").value="";$("annMessage").value="";$("annStatus").textContent="✓ Announcement published.";$("annStatus").className="status ok";}
- catch(e){$("annStatus").textContent="Error: "+e.message;$("annStatus").className="status err";}
-};
-function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
-if("serviceWorker" in navigator)navigator.serviceWorker.register("./service-worker.js").catch(()=>{});
-</script>
-</body>
-</html>
+const db=getFirestore(initializeApp(firebaseConfig)),ADMIN_PIN="9999",$=id=>document.getElementById(id);
+window.adminLogin=()=>{if($("adminPin").value!==ADMIN_PIN){$("loginErr").textContent="Incorrect admin PIN.";return}$("login").style.display="none";$("dashboard").style.display="block";loadDashboard()};
+window.logout=()=>location.reload();
+window.loadDashboard=async()=>{try{const fs=await getDocs(collection(db,"flats"));let paid=0,pending=0,total=0,rows="";for(const f of fs.docs.sort((a,b)=>a.id.localeCompare(b.id,undefined,{numeric:true}))){const m=(await getDoc(doc(db,"maintenance","2026-10_"+f.id))).data();const st=m?.status||"not created";if(st==="paid"){paid++;total+=Number(m.amount||0)}if(st==="pending")pending++;rows+=`<div class="item"><div class="row"><div><b>Flat ${esc(f.id)}</b><div class="muted">${esc(f.data().residentName||"No resident")}</div></div><span class="badge ${st==="paid"?"paid":"pending"}">${esc(st.toUpperCase())}</span></div><div class="actions" style="margin-top:7px"><button class="btn2" onclick="editFlat('${esc(f.id)}')">Edit</button><button class="btn2" onclick="preparePayment('${esc(f.id)}')">Payment</button></div></div>`}$("totalFlats").textContent=fs.size;$("paidCount").textContent=paid;$("pendingCount").textContent=pending;$("collection").textContent="₹"+total.toLocaleString("en-IN");$("flatList").innerHTML=rows||"No flats.";loadComplaints();loadExpenses()}catch(e){$("flatList").textContent=e.message}};
+window.saveFlat=async()=>{const id=$("flatId").value.trim().toUpperCase();if(!id){$("flatStatusMsg").textContent="Enter a flat number.";return}try{await setDoc(doc(db,"flats",id),{flatNumber:id,residentName:$("residentName").value.trim(),pin:$("residentPin").value.trim(),status:$("flatStatus").value},{merge:true});if($("flatStatus").value==="active"){const md=doc(db,"maintenance","2026-10_"+id),existing=await getDoc(md);if(!existing.exists())await setDoc(md,{flatNumber:id,month:"October 2026",amount:Number($("billAmount").value||1565),dueDate:"10 Oct 2026",status:"pending"})}$("flatStatusMsg").textContent="✓ Flat saved and October maintenance checked.";$("flatStatusMsg").className="ok";await loadDashboard()}catch(e){$("flatStatusMsg").textContent="Error: "+e.message;$("flatStatusMsg").className="err"}};
+window.editFlat=async id=>{const s=await getDoc(doc(db,"flats",id));const d=s.data();$("flatId").value=id;$("residentName").value=d.residentName||"";$("residentPin").value=d.pin||"";$("flatStatus").value=d.status||"active";scrollTo(0,document.body.scrollHeight/3)};
+window.clearFlat=()=>{["flatId","residentName","residentPin"].forEach(x=>$(x).value="");$("flatStatus").value="active"};
+window.createBills=async()=>{const amount=Number($("billAmount").value||1565);$("actionStatus").textContent="Creating bills…";try{const fs=await getDocs(collection(db,"flats"));let n=0;for(const f of fs.docs)await setDoc(doc(db,"maintenance","2026-10_"+f.id),{flatNumber:f.id,month:"October 2026",amount,dueDate:"10 Oct 2026",status:(await getDoc(doc(db,"maintenance","2026-10_"+f.id))).data()?.status||"pending"},{merge:true}),n++;$("actionStatus").textContent=`✓ ${n} October records created/updated.`;$("actionStatus").className="ok";await loadDashboard()}catch(e){$("actionStatus").textContent=e.message;$("actionStatus").className="err"}};
+window.preparePayment=id=>{$("payFlat").value=id;scrollTo(0,document.body.scrollHeight/2)};
+window.updatePayment=async()=>{const id=$("payFlat").value.trim().toUpperCase(),month=$("payMonth").value.trim();if(!id||!month){$("payMsg").textContent="Enter flat and month.";return}const key="2026-10_"+id;try{await setDoc(doc(db,"maintenance",key),{flatNumber:id,month,status:$("payStatus").value,paymentReference:$("payRef").value.trim(),paidDate:$("payStatus").value==="paid"?new Date().toLocaleDateString("en-GB"):""},{merge:true});$("payMsg").textContent="✓ Payment updated.";$("payMsg").className="ok";await loadDashboard()}catch(e){$("payMsg").textContent=e.message;$("payMsg").className="err"}};
+window.saveAnnouncement=async()=>{const title=$("annTitle").value.trim(),message=$("annMessage").value.trim();if(!title||!message)return;$("annStatus").textContent="Publishing…";try{await addDoc(collection(db,"announcements"),{title,message,date:new Date().toLocaleDateString("en-GB",{day:"2-digit",month:"short",year:"numeric"}),createdAt:serverTimestamp()});$("annTitle").value="";$("annMessage").value="";$("annStatus").textContent="✓ Published.";$("annStatus").className="ok"}catch(e){$("annStatus").textContent=e.message;$("annStatus").className="err"}};
+async function loadComplaints(){try{const s=await getDocs(collection(db,"complaints"));$("complaintList").innerHTML=s.docs.map(x=>{const d=x.data();return`<div class="item"><div class="row"><b>Flat ${esc(d.flatNumber)} · ${esc(d.category)}</b><select onchange="setComplaint('${x.id}',this.value)"><option ${d.status==="New"?"selected":""}>New</option><option ${d.status==="In Progress"?"selected":""}>In Progress</option><option ${d.status==="Resolved"?"selected":""}>Resolved</option></select></div><div>${esc(d.description)}</div></div>`}).join("")||"No complaints."}catch(e){$("complaintList").textContent=e.message}}
+window.setComplaint=async(id,status)=>{await updateDoc(doc(db,"complaints",id),{status});loadComplaints()};
+async function loadExpenses(){try{const s=await getDocs(query(collection(db,"expenses"),orderBy("createdAt","desc")));$("expenseList").innerHTML=s.docs.map(x=>{const d=x.data();return`<div class="item"><b>${esc(d.category)}</b> · ₹${Number(d.amount||0).toLocaleString("en-IN")}<div class="muted">${esc(d.description||"")}</div></div>`}).join("")||"No expenses."}catch(e){$("expenseList").textContent="No expenses yet."}}
+window.saveExpense=async()=>{const c=$("expCategory").value.trim(),d=$("expDescription").value.trim(),a=Number($("expAmount").value);if(!c||!a){$("expMsg").textContent="Enter category and amount.";return}await addDoc(collection(db,"expenses"),{category:c,description:d,amount:a,createdAt:serverTimestamp()});$("expCategory").value="";$("expDescription").value="";$("expAmount").value="";$("expMsg").textContent="✓ Expense added.";loadExpenses()};
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+if("serviceWorker"in navigator)navigator.serviceWorker.register("./service-worker.js").catch(()=>{});
+</script></body></html>

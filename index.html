@@ -1,134 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#1769e0">
-<link rel="manifest" href="./manifest.webmanifest">
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#1769e0"><link rel="manifest" href="./manifest.webmanifest">
 <title>SRK's Sri Sai Heights</title>
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f5f7fb;color:#14213d}
-.app{max-width:520px;margin:auto;min-height:100vh;background:#f5f7fb}.top{background:#1769e0;color:#fff;padding:22px 18px 25px;border-radius:0 0 24px 24px}
-.top h1{font-size:20px;margin:0 0 5px}.top p{margin:0;opacity:.9;font-size:13px}.content{padding:15px 15px 80px}
-.card{background:#fff;border-radius:16px;padding:16px;margin-bottom:13px;box-shadow:0 2px 10px #0000000b}.welcome{display:flex;gap:12px;align-items:center}
-.avatar{width:48px;height:48px;border-radius:50%;background:#dcecff;display:grid;place-items:center;font-size:23px}
-.bill{background:linear-gradient(135deg,#eef8f1,#fff);border:1px solid #d8f0df}.row{display:flex;justify-content:space-between;align-items:center;gap:10px}
-.muted{color:#6d7789;font-size:13px}.amount{font-size:30px;font-weight:700;margin:7px 0}.badge{padding:6px 10px;border-radius:20px;background:#dff6e6;color:#138a3d;font-size:11px;font-weight:700}
-.pending{background:#fff0dc;color:#d66a00}.grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.tile{background:#fff;border:0;border-radius:15px;padding:19px 10px;text-align:center;box-shadow:0 2px 10px #0000000b;font-size:14px}
-.tile .ico{font-size:27px;display:block;margin-bottom:7px}.section-title{font-size:18px;font-weight:700;margin:7px 0 13px}
-.btn{border:0;border-radius:11px;padding:13px;width:100%;background:#1769e0;color:#fff;font-weight:700;font-size:14px}.btn2{border:1px solid #d8dee9;border-radius:11px;padding:12px;background:#fff;color:#1769e0;font-weight:700}
-.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:520px;background:#fff;border-top:1px solid #e7eaf0;display:grid;grid-template-columns:repeat(4,1fr);padding:7px 4px calc(7px + env(safe-area-inset-bottom));z-index:10}
-.nav button{border:0;background:none;color:#697386;font-size:11px;padding:6px}.nav button.active{color:#1769e0;font-weight:700}.nav span{display:block;font-size:21px;margin-bottom:2px}
-.screen{display:none}.screen.active{display:block}.back{border:0;background:none;font-size:24px;margin-bottom:5px}.notice{border-left:4px solid #1769e0}.history .row{padding:12px 0;border-bottom:1px solid #edf0f5}
-.login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:#f5f7fb}.login-card{width:100%;max-width:420px;background:#fff;border-radius:20px;padding:27px 22px;box-shadow:0 4px 20px #00000012}
-.login-logo{width:64px;height:64px;border-radius:18px;background:#1769e0;color:#fff;display:grid;place-items:center;font-size:30px;margin:0 auto 18px}.login h2{text-align:center;margin:0 0 5px}.login-sub{text-align:center;color:#6d7789;font-size:13px;margin-bottom:23px}
-.field{margin-bottom:14px}.field label{display:block;font-size:13px;font-weight:700;margin-bottom:7px}.field input{width:100%;padding:14px;border:1px solid #d9dee8;border-radius:11px;font-size:16px}
-.error{color:#b42318;font-size:13px;margin:8px 0}.ok{color:#13813b;font-size:13px}.loading{font-size:12px;color:#6d7789;margin-top:7px}.small{text-align:center;color:#7a8495;font-size:11px;margin-top:13px}
-.logout{float:right;border:0;background:#fff;color:#1769e0;font-size:12px;font-weight:700;border-radius:8px;padding:7px 10px}
-</style>
-</head>
-<body>
-<div id="loginScreen" class="login">
-  <div class="login-card">
-    <div class="login-logo">🏠</div>
-    <h2>SRK'S SRI SAI HEIGHTS</h2>
-    <div class="login-sub">Resident Login</div>
-    <div class="field"><label>Flat Number</label><input id="loginFlat" autocomplete="off" placeholder="Example: 303 or G1"></div>
-    <div class="field"><label>PIN</label><input id="loginPin" type="password" inputmode="numeric" maxlength="6" placeholder="Enter PIN"></div>
-    <div id="loginError" class="error" style="display:none"></div>
-    <button id="loginBtn" class="btn">Login</button>
-    <div class="small">Use the Flat Number and PIN provided by the apartment admin.</div>
-  </div>
-</div>
-
-<div id="appScreen" class="app" style="display:none">
-<header class="top"><button class="logout" onclick="logout()">Logout</button><h1>SRK'S SRI SAI HEIGHTS</h1><p>Our Home, Our Community</p></header>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f5f7fb;color:#14213d}.app{max-width:600px;margin:auto;min-height:100vh}.top{background:#1769e0;color:#fff;padding:20px 17px 23px;border-radius:0 0 24px 24px}.top h1{margin:0;font-size:20px}.top p{margin:5px 0 0;font-size:13px;opacity:.9}.content{padding:15px}.card{background:#fff;border-radius:16px;padding:16px;margin-bottom:13px;box-shadow:0 2px 10px #0001}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{padding:14px;border-radius:14px;background:#f8faff}.stat small{color:#687386}.stat b{display:block;font-size:20px;margin-top:5px}.title{font-size:18px;font-weight:700;margin:5px 0 12px}.muted{font-size:12px;color:#687386}.btn{border:0;border-radius:11px;padding:12px 14px;background:#1769e0;color:white;font-weight:700}.btn2{border:1px solid #d7ddea;border-radius:11px;padding:11px 14px;background:white;color:#1769e0;font-weight:700}.field{margin-bottom:11px}.field label{display:block;font-size:12px;font-weight:700;margin-bottom:5px}.field input,.field textarea,.field select{width:100%;padding:12px;border:1px solid #d7ddea;border-radius:10px;font-size:15px}.field textarea{min-height:80px}.row{display:flex;justify-content:space-between;align-items:center;gap:8px}.badge{padding:5px 9px;border-radius:20px;font-size:10px;font-weight:700}.paid{background:#def5e5;color:#13813b}.pending{background:#fff0dc;color:#c96400}.new{background:#e7f0ff;color:#1769e0}.resolved{background:#def5e5;color:#13813b}.nav{position:sticky;bottom:0;background:#fff;border-top:1px solid #ddd;display:grid;grid-template-columns:repeat(5,1fr);padding:7px 4px;z-index:5}.nav button{border:0;background:white;font-size:10px;color:#687386;padding:7px 2px}.nav button.active{color:#1769e0;font-weight:700}.page{display:none}.page.active{display:block}.login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}.login-card{width:100%;max-width:420px;background:#fff;padding:25px;border-radius:20px;box-shadow:0 4px 20px #0001}.login-logo{width:65px;height:65px;border-radius:18px;background:#1769e0;color:#fff;display:grid;place-items:center;font-size:28px;margin:auto auto 15px}.error{color:#b42318;font-size:13px;margin:8px 0}.item{padding:11px 0;border-bottom:1px solid #edf0f4}.item:last-child{border-bottom:0}
+</style></head><body>
+<div id="login" class="login"><div class="login-card">
+<div class="login-logo">🏢</div><h2 style="text-align:center;margin:0">SRK's Sri Sai Heights</h2><p class="muted" style="text-align:center">Resident App</p>
+<div class="field"><label>Flat Number</label><input id="flat" placeholder="e.g. G4" autocomplete="username"></div>
+<div class="field"><label>PIN</label><input id="pin" type="password" inputmode="numeric" placeholder="Enter PIN"></div>
+<div id="loginErr" class="error"></div><button class="btn" style="width:100%" onclick="login()">Login</button>
+</div></div>
+<div id="app" class="app" style="display:none">
+<header class="top"><button onclick="logout()" style="float:right;border:0;border-radius:8px;padding:7px 10px;color:#1769e0;background:#fff;font-weight:700">Logout</button><h1>SRK'S SRI SAI HEIGHTS</h1><p id="welcome"></p></header>
 <main class="content">
-<section id="home" class="screen active">
-<div class="card welcome"><div class="avatar">👤</div><div><b id="welcomeName">Welcome</b><div class="muted">Flat <span id="flatNumber"></span></div><div id="dbStatus" class="loading">Connecting…</div></div></div>
-<div class="card bill"><div class="row"><div><b id="homeMonth">Loading…</b><div class="muted">Monthly Maintenance</div></div><span id="homeStatus" class="badge pending">LOADING</span></div><div id="homeAmount" class="amount">₹—</div><div class="muted">Due date: <span id="homeDueDate">—</span></div></div>
-<div class="grid">
-<button class="tile" onclick="show('maintenance')"><span class="ico">💳</span>Maintenance</button>
-<button class="tile" onclick="show('chat')"><span class="ico">💬</span>Community Chat</button>
-<button class="tile" onclick="show('notices')"><span class="ico">📢</span>Announcements</button>
-<button class="tile" onclick="show('maintenance')"><span class="ico">🧾</span>Receipts</button>
-</div>
+<section id="home" class="page active">
+<div class="card"><div class="title">Home</div><div class="grid"><div class="stat"><small>Maintenance</small><b id="homeAmt">₹—</b></div><div class="stat"><small>Status</small><b id="homeStatus">—</b></div></div></div>
+<div class="card"><div class="title">Latest Announcements</div><div id="homeAnnouncements" class="muted">Loading…</div></div>
 </section>
-<section id="maintenance" class="screen">
-<button class="back" onclick="show('home')">‹</button><div class="section-title">Maintenance & Payments</div>
-<div class="card bill"><div class="row"><b id="payMonth">Loading…</b><span id="payStatus" class="badge pending">LOADING</span></div><div id="payAmount" class="amount">₹—</div><div class="muted">Due: <span id="payDueDate">—</span></div><button class="btn" style="margin-top:15px" onclick="demoPay()">Pay Now (UPI)</button></div>
-<div class="section-title">Payment History</div><div class="card history" id="history"><div class="muted">Loading payment history…</div></div>
+<section id="maintenance" class="page">
+<div class="card"><div class="title">Maintenance</div><div id="maintenanceList">Loading…</div></div>
 </section>
-<section id="chat" class="screen"><div class="section-title">Community Chat</div><div class="card"><div class="muted">Community chat can be connected to Firestore in the next update.</div></div></section>
-<section id="notices" class="screen"><div class="section-title">Announcements</div><div id="noticesList"><div class="card"><div class="muted">Loading announcements…</div></div></div></section>
+<section id="announcements" class="page">
+<div class="card"><div class="title">Announcements</div><div id="announcementList">Loading…</div></div>
+</section>
+<section id="chat" class="page">
+<div class="card"><div class="title">Community Chat</div><div id="chatList">Loading…</div>
+<div class="field" style="margin-top:12px"><textarea id="chatMessage" placeholder="Write a message…"></textarea></div><button class="btn" onclick="sendChat()">Send</button></div>
+</section>
+<section id="complaints" class="page">
+<div class="card"><div class="title">My Complaints</div><div id="complaintList">Loading…</div></div>
+<div class="card"><div class="title">Raise Complaint</div>
+<div class="field"><label>Category</label><select id="complaintCategory"><option>Maintenance</option><option>Water</option><option>Electrical</option><option>Security</option><option>Cleaning</option><option>Other</option></select></div>
+<div class="field"><label>Description</label><textarea id="complaintText" placeholder="Describe the issue"></textarea></div>
+<button class="btn" onclick="raiseComplaint()">Submit Complaint</button><div id="complaintMsg" class="muted" style="margin-top:8px"></div></div>
+</section>
 </main>
 <nav class="nav">
-<button class="active" onclick="show('home',this)"><span>⌂</span>Home</button>
-<button onclick="show('maintenance',this)"><span>▣</span>Payments</button>
-<button onclick="show('chat',this)"><span>●</span>Chat</button>
-<button onclick="show('notices',this)"><span>🔔</span>Notices</button>
-</nav>
-</div>
-
+<button class="active" onclick="showPage('home',this)">🏠<br>Home</button>
+<button onclick="showPage('maintenance',this)">💰<br>Maintenance</button>
+<button onclick="showPage('announcements',this)">📢<br>News</button>
+<button onclick="showPage('chat',this)">💬<br>Chat</button>
+<button onclick="showPage('complaints',this)">🛠️<br>Complaints</button>
+</nav></div>
 <script type="module">
-import {initializeApp} from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
-import {getFirestore,doc,getDoc,collection,getDocs,query,orderBy} from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
-
+import{initializeApp}from"https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
+import{getFirestore,collection,getDocs,doc,getDoc,setDoc,addDoc,query,orderBy,limit,serverTimestamp}from"https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
 const firebaseConfig={apiKey:"AIzaSyAIPpzzWEOTs5SW_CnV6D2wkc5k2Y5BxIM",authDomain:"srk-sri-sai-heights.firebaseapp.com",projectId:"srk-sri-sai-heights",storageBucket:"srk-sri-sai-heights.firebasestorage.app",messagingSenderId:"501758531689",appId:"1:501758531689:web:d88a6ffbd3409a868ceaf8"};
-const db=getFirestore(initializeApp(firebaseConfig));
-let currentFlat="";
-
+const db=getFirestore(initializeApp(firebaseConfig));let currentFlat="",currentName="";
 const $=id=>document.getElementById(id);
-$("loginBtn").onclick=login;
-$("loginPin").addEventListener("keydown",e=>{if(e.key==="Enter")login();});
-
-async function login(){
- const flat=$("loginFlat").value.trim().toUpperCase(),pin=$("loginPin").value.trim(),err=$("loginError");
- err.style.display="none";
- if(!flat||!pin){err.textContent="Please enter Flat Number and PIN.";err.style.display="block";return;}
- const b=$("loginBtn");b.disabled=true;b.textContent="Checking…";
- try{
-  const snap=await getDoc(doc(db,"flats",flat));
-  if(!snap.exists()) throw new Error("Flat "+flat+" was not found.");
-  const d=snap.data();
-  if(String(d.pin||"")!==pin) throw new Error("Incorrect PIN.");
-  if(d.status&&d.status!=="active") throw new Error("This flat is not active.");
-  currentFlat=flat;
-  $("flatNumber").textContent=d.flatNumber||flat;
-  $("welcomeName").textContent="Welcome, "+(d.residentName||"Resident");
-  $("loginScreen").style.display="none";$("appScreen").style.display="block";
-  sessionStorage.setItem("flat",flat);
-  await Promise.all([loadMaintenance(flat),loadNotices()]);
- }catch(e){err.textContent=e.message;err.style.display="block";}
- finally{b.disabled=false;b.textContent="Login";}
-}
-
-async function loadMaintenance(flat){
- try{
-  const snap=await getDoc(doc(db,"maintenance","2026-10_"+flat));
-  if(!snap.exists()){$("dbStatus").textContent="Connected, but October bill not found.";return;}
-  const d=snap.data(),amount=Number(d.amount||0).toLocaleString("en-IN"),month=d.month||"October 2026",due=d.dueDate||"—",st=String(d.status||"pending");
-  $("homeMonth").textContent=month;$("homeAmount").textContent="₹"+amount;$("homeDueDate").textContent=due;
-  $("payMonth").textContent=month;$("payAmount").textContent="₹"+amount;$("payDueDate").textContent=due;
-  setStatus("homeStatus",st);setStatus("payStatus",st);$("dbStatus").textContent="✓ Firebase connected";
-  $("history").innerHTML='<div class="row"><div><b>'+month+'</b><div class="muted">Current bill</div></div><span class="badge '+(st.toLowerCase()==="pending"?"pending":"")+'">'+st.toUpperCase()+'</span></div>';
- }catch(e){$("dbStatus").textContent="Firebase error: "+e.message;}
-}
-function setStatus(id,st){const e=$(id);e.textContent=st.toUpperCase();e.className="badge"+(st.toLowerCase()==="pending"?" pending":"");}
-
-async function loadNotices(){
- try{
-  const snap=await getDocs(query(collection(db,"announcements"),orderBy("createdAt","desc")));
-  let html="";
-  snap.forEach(x=>{const d=x.data();html+=`<div class="card notice"><b>${escapeHtml(d.title||"Announcement")}</b><div class="muted">${escapeHtml(d.date||"")}</div><p>${escapeHtml(d.message||"")}</p></div>`;});
-  $("noticesList").innerHTML=html||'<div class="card"><div class="muted">No announcements yet.</div></div>';
- }catch(e){$("noticesList").innerHTML='<div class="card"><div class="muted">Announcements are not configured yet.</div></div>';}
-}
-function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
-window.logout=()=>{sessionStorage.removeItem("flat");currentFlat="";$("appScreen").style.display="none";$("loginScreen").style.display="flex";$("loginPin").value="";};
-window.show=(id,el)=>{document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));$(id).classList.add("active");document.querySelectorAll(".nav button").forEach(x=>x.classList.remove("active"));if(el)el.classList.add("active");};
-window.demoPay=()=>alert("UPI payment will be connected after the Firebase/payment setup is finalized.");
-if("serviceWorker" in navigator) navigator.serviceWorker.register("./service-worker.js").catch(()=>{});
-</script>
-</body>
-</html>
+window.login=async()=>{const f=$("flat").value.trim().toUpperCase(),p=$("pin").value.trim();$("loginErr").textContent="";try{const s=await getDoc(doc(db,"flats",f));if(!s.exists()||s.data().pin!==p||s.data().status==="inactive"){throw Error("Invalid flat number or PIN.")}currentFlat=f;currentName=s.data().residentName||"Resident";$("login").style.display="none";$("app").style.display="block";$("welcome").textContent=`Welcome, ${currentName} · Flat ${f}`;await loadAll()}catch(e){$("loginErr").textContent=e.message}};
+window.logout=()=>location.reload();
+window.showPage=(id,b)=>{document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));$(id).classList.add("active");document.querySelectorAll(".nav button").forEach(x=>x.classList.remove("active"));b.classList.add("active");};
+async function loadAll(){await Promise.all([loadMaintenance(),loadAnnouncements(),loadChat(),loadComplaints()])}
+async function loadMaintenance(){const s=await getDocs(collection(db,"maintenance"));let arr=s.docs.map(x=>x.data()).filter(x=>x.flatNumber===currentFlat).sort((a,b)=>(b.month||"").localeCompare(a.month||""));if(!arr.length){$("maintenanceList").textContent="No maintenance bills found.";return}let latest=arr[0];$("homeAmt").textContent="₹"+Number(latest.amount||0).toLocaleString("en-IN");$("homeStatus").textContent=(latest.status||"Pending").toUpperCase();$("maintenanceList").innerHTML=arr.map(m=>`<div class="item"><div class="row"><b>${esc(m.month||"Maintenance")}</b><span class="badge ${m.status==="paid"?"paid":"pending"}">${esc(m.status||"pending").toUpperCase()}</span></div><div class="muted">Amount: ₹${Number(m.amount||0).toLocaleString("en-IN")} · Due: ${esc(m.dueDate||"—")}</div>${m.paidDate?`<div class="muted">Paid: ${esc(m.paidDate)}</div>`:""}</div>`).join("")}
+async function loadAnnouncements(){try{const s=await getDocs(query(collection(db,"announcements"),orderBy("createdAt","desc"),limit(20)));const a=s.docs.map(x=>x.data());const html=a.length?a.map(x=>`<div class="item"><b>${esc(x.title||"Announcement")}</b><div>${esc(x.message||"")}</div><div class="muted">${esc(x.date||"")}</div></div>`).join(""):"No announcements yet.";$("announcementList").innerHTML=html;$("homeAnnouncements").innerHTML=a.slice(0,3).map(x=>`<div class="item"><b>${esc(x.title||"Announcement")}</b><div>${esc(x.message||"")}</div></div>`).join("")||"No announcements yet."}catch(e){$("announcementList").textContent="No announcements yet.";$("homeAnnouncements").textContent="No announcements yet."}}
+async function loadChat(){try{const s=await getDocs(query(collection(db,"chat"),orderBy("createdAt","desc"),limit(50)));const a=s.docs.map(x=>x.data()).reverse();$("chatList").innerHTML=a.map(x=>`<div class="item"><b>${esc(x.residentName||"Resident")} · ${esc(x.flatNumber||"")}</b><div>${esc(x.message||"")}</div><div class="muted">${x.createdAt?.toDate?x.createdAt.toDate().toLocaleString("en-IN"): ""}</div></div>`).join("")||"No messages yet."}catch(e){$("chatList").textContent="Chat is not available yet."}}
+window.sendChat=async()=>{const m=$("chatMessage").value.trim();if(!m)return;await addDoc(collection(db,"chat"),{flatNumber:currentFlat,residentName:currentName,message:m,createdAt:serverTimestamp()});$("chatMessage").value="";await loadChat()}
+async function loadComplaints(){const s=await getDocs(collection(db,"complaints"));const a=s.docs.map(x=>x.data()).filter(x=>x.flatNumber===currentFlat).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));$("complaintList").innerHTML=a.map(x=>`<div class="item"><div class="row"><b>${esc(x.category)}</b><span class="badge ${x.status==="Resolved"?"resolved":"new"}">${esc(x.status||"New")}</span></div><div>${esc(x.description)}</div><div class="muted">${x.createdAt?.toDate?x.createdAt.toDate().toLocaleString("en-IN"):""}</div></div>`).join("")||"No complaints."; }
+window.raiseComplaint=async()=>{const d=$("complaintText").value.trim();if(!d){$("complaintMsg").textContent="Enter a description.";return}await addDoc(collection(db,"complaints"),{flatNumber:currentFlat,residentName:currentName,category:$("complaintCategory").value,description:d,status:"New",createdAt:serverTimestamp()});$("complaintText").value="";$("complaintMsg").textContent="✓ Complaint submitted.";await loadComplaints()}
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+if("serviceWorker"in navigator)navigator.serviceWorker.register("./service-worker.js").catch(()=>{});
+</script></body></html>

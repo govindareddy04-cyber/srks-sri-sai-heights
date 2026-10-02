@@ -1,11 +1,10 @@
 {
-  "name": "SRK's Sri Sai Heights",
-  "short_name": "SRK Heights",
-  "start_url": "./index.html",
-  "scope": "./",
-  "display": "standalone",
-  "background_color": "#f5f7fb",
-  "theme_color": "#1769e0",
-  "orientation": "portrait",
-  "icons": []
+  "name":"SRK's Sri Sai Heights",
+  "short_name":"SRK Heights",
+  "start_url":"./index.html",
+  "scope":"./",
+  "display":"standalone",
+  "background_color":"#f5f7fb",
+  "theme_color":"#1769e0",
+  "orientation":"portrait"
 }
