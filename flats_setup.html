@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SRK Flat Setup</title>
+<style>
+body{font-family:Arial;background:#f5f7fb;padding:20px}.card{max-width:480px;margin:auto;background:white;padding:22px;border-radius:16px;box-shadow:0 2px 12px #0001}button{width:100%;padding:15px;border:0;border-radius:10px;background:#1769e0;color:white;font-weight:bold;font-size:16px}pre{white-space:pre-wrap;background:#f3f5f8;padding:12px;border-radius:10px;font-size:13px}
+</style>
+</head>
+<body>
+<div class="card">
+<h2>SRK'S SRI SAI HEIGHTS</h2>
+<p>This will create the 16 remaining flat records in Firebase.</p>
+<p><b>303 will NOT be changed.</b></p>
+<button id="go">Create 16 Flats</button>
+<pre id="out">Ready.</pre>
+</div>
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
+import {getFirestore,doc,setDoc,getDoc} from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
+
+const firebaseConfig={
+ apiKey:"AIzaSyAIPpzzWEOTs5SW_CnV6D2wkc5k2Y5BxIM",
+ authDomain:"srk-sri-sai-heights.firebaseapp.com",
+ projectId:"srk-sri-sai-heights",
+ storageBucket:"srk-sri-sai-heights.firebasestorage.app",
+ messagingSenderId:"501758531689",
+ appId:"1:501758531689:web:d88a6ffbd3409a868ceaf8"
+};
+const db=getFirestore(initializeApp(firebaseConfig));
+const flats=[
+["G1","Hari Krishna"],["G2","Sarvesh"],["G3","Tester"],
+["101","Ramesh"],["102","Siva"],["103","Srinivas"],
+["201","Venkatesh"],["202","No"],["203","Rakesh"],
+["301","Srinivas Naidu"],["302","Pavan"],["401","No"],
+["402","Krishna"],["403","Anil"],["501","Anusha"],["502","Gangadhar"]
+];
+
+document.getElementById("go").onclick=async()=>{
+ const out=document.getElementById("out"),btn=document.getElementById("go");
+ btn.disabled=true;out.textContent="Creating flats...\n";
+ let done=0;
+ try{
+  for(const [flat,name] of flats){
+   const ref=doc(db,"flats",flat);
+   const existing=await getDoc(ref);
+   if(existing.exists()){out.textContent+=`Skipped ${flat} (already exists)\n`;}
+   else{
+    await setDoc(ref,{flatNumber:flat,residentName:name,status:"active",pin:"1234"});
+    out.textContent+=`Created ${flat} - ${name}\n`;done++;
+   }
+  }
+  out.textContent+=`\nCompleted. ${done} new flat records created.`;
+ }catch(e){
+  out.textContent+=`\nERROR: ${e.message}`;
+ }finally{btn.disabled=false;}
+};
+</script>
+</body>
+</html>
