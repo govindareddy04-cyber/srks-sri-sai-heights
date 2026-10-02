@@ -40,14 +40,8 @@
     <div class="login-logo">🏠</div>
     <h2>SRK'S SRI SAI HEIGHTS</h2>
     <div class="login-sub">Resident Login</div>
-    <div class="field">
-      <label>Flat Number</label>
-      <input id="loginFlat" type="text" inputmode="numeric" placeholder="Example: 303">
-    </div>
-    <div class="field">
-      <label>PIN</label>
-      <input id="loginPin" type="password" inputmode="numeric" maxlength="6" placeholder="Enter PIN">
-    </div>
+    <div class="field"><label>Flat Number</label><input id="loginFlat" type="text" inputmode="numeric" placeholder="Example: 303"></div>
+    <div class="field"><label>PIN</label><input id="loginPin" type="password" inputmode="numeric" maxlength="6" placeholder="Enter PIN"></div>
     <div id="loginError" class="login-error"></div>
     <button id="loginBtn" class="btn">Login</button>
     <div class="small">Use the Flat Number and PIN provided by the apartment admin.</div>
@@ -57,22 +51,17 @@
 <div id="appScreen" class="app" style="display:none">
   <div class="top">
     <button class="logout" onclick="logout()">Logout</button>
-    <h1>SRK'S SRI SAI HEIGHTS</h1>
-    <p>Our Home, Our Community</p>
+    <h1>SRK'S SRI SAI HEIGHTS</h1><p>Our Home, Our Community</p>
   </div>
   <main class="content">
     <section id="home" class="screen active">
       <div class="card welcome">
         <div class="avatar">👤</div>
-        <div>
-          <b id="welcomeName">Welcome, Resident</b>
-          <div class="muted">Flat <span id="flatNumber"></span></div>
-          <div id="dbStatus" class="loading">Connected to Firebase</div>
-        </div>
+        <div><b id="welcomeName">Welcome, Resident</b><div class="muted">Flat <span id="flatNumber"></span></div><div id="dbStatus" class="loading">Connected to Firebase</div></div>
       </div>
       <div class="card bill">
-        <div class="row"><div><b>October 2026</b><div class="muted">Monthly Maintenance</div></div><span class="badge pending">PENDING</span></div>
-        <div class="amount">₹3,000</div><div class="muted">Due date: 10 Oct 2026</div>
+        <div class="row"><div><b id="homeMonth">Loading…</b><div class="muted">Monthly Maintenance</div></div><span id="homeStatus" class="badge pending">LOADING</span></div>
+        <div id="homeAmount" class="amount">₹—</div><div class="muted">Due date: <span id="homeDueDate">—</span></div>
       </div>
       <div class="grid">
         <button class="tile" onclick="show('maintenance')"><span class="ico">💳</span>Maintenance</button>
@@ -86,8 +75,8 @@
       <button class="back" onclick="show('home')">‹</button>
       <div class="section-title">Maintenance & Payments</div>
       <div class="card bill">
-        <div class="row"><b>October 2026</b><span class="badge pending">PENDING</span></div>
-        <div class="amount">₹3,000</div><div class="muted">Due: 10 Oct 2026</div>
+        <div class="row"><b id="payMonth">Loading…</b><span id="payStatus" class="badge pending">LOADING</span></div>
+        <div id="payAmount" class="amount">₹—</div><div class="muted">Due: <span id="payDueDate">—</span></div>
         <button class="btn" style="margin-top:15px" onclick="demoPay()">Pay Now (UPI)</button>
       </div>
       <div class="section-title">Payment History</div>
@@ -118,75 +107,68 @@ import {initializeApp} from "https://www.gstatic.com/firebasejs/12.5.0/firebase-
 import {getFirestore,doc,getDoc} from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
 
 const firebaseConfig={
-  apiKey:"AIzaSyAIPpzzWEOTs5SW_CnV6D2wkc5k2Y5BxIM",
-  authDomain:"srk-sri-sai-heights.firebaseapp.com",
-  projectId:"srk-sri-sai-heights",
-  storageBucket:"srk-sri-sai-heights.firebasestorage.app",
-  messagingSenderId:"501758531689",
-  appId:"1:501758531689:web:d88a6ffbd3409a868ceaf8"
+ apiKey:"AIzaSyAIPpzzWEOTs5SW_CnV6D2wkc5k2Y5BxIM",
+ authDomain:"srk-sri-sai-heights.firebaseapp.com",
+ projectId:"srk-sri-sai-heights",
+ storageBucket:"srk-sri-sai-heights.firebasestorage.app",
+ messagingSenderId:"501758531689",
+ appId:"1:501758531689:web:d88a6ffbd3409a868ceaf8"
 };
 const app=initializeApp(firebaseConfig),db=getFirestore(app);
+let currentFlat="";
 
 document.getElementById("loginBtn").addEventListener("click",login);
 document.getElementById("loginPin").addEventListener("keydown",e=>{if(e.key==="Enter")login();});
 
 async function login(){
-  const flat=document.getElementById("loginFlat").value.trim();
-  const pin=document.getElementById("loginPin").value.trim();
-  const err=document.getElementById("loginError");
-  err.style.display="none";
-
-  if(!flat || !pin){err.textContent="Please enter Flat Number and PIN.";err.style.display="block";return;}
-
-  const btn=document.getElementById("loginBtn");
-  btn.disabled=true;btn.textContent="Checking…";
-
-  try{
-    const snap=await getDoc(doc(db,"flats",flat));
-    if(!snap.exists()){
-      err.textContent="Flat "+flat+" was not found.";
-      err.style.display="block";return;
-    }
-    const d=snap.data();
-    if(String(d.pin||"")!==pin){
-      err.textContent="Incorrect PIN.";
-      err.style.display="block";return;
-    }
-    if(d.status && d.status!=="active"){
-      err.textContent="This flat is not active.";
-      err.style.display="block";return;
-    }
-
-    document.getElementById("flatNumber").textContent=d.flatNumber||flat;
-    document.getElementById("welcomeName").textContent="Welcome, "+(d.residentName||"Resident");
-    document.getElementById("loginScreen").style.display="none";
-    document.getElementById("appScreen").style.display="block";
-    sessionStorage.setItem("flat",flat);
-  }catch(e){
-    err.textContent="Firebase error: "+e.message;
-    err.style.display="block";
-  }finally{
-    btn.disabled=false;btn.textContent="Login";
-  }
+ const flat=document.getElementById("loginFlat").value.trim(),pin=document.getElementById("loginPin").value.trim(),err=document.getElementById("loginError");
+ err.style.display="none";
+ if(!flat||!pin){err.textContent="Please enter Flat Number and PIN.";err.style.display="block";return;}
+ const btn=document.getElementById("loginBtn");btn.disabled=true;btn.textContent="Checking…";
+ try{
+  const snap=await getDoc(doc(db,"flats",flat));
+  if(!snap.exists()){err.textContent="Flat "+flat+" was not found.";err.style.display="block";return;}
+  const d=snap.data();
+  if(String(d.pin||"")!==pin){err.textContent="Incorrect PIN.";err.style.display="block";return;}
+  if(d.status&&d.status!=="active"){err.textContent="This flat is not active.";err.style.display="block";return;}
+  currentFlat=flat;
+  document.getElementById("flatNumber").textContent=d.flatNumber||flat;
+  document.getElementById("welcomeName").textContent="Welcome, "+(d.residentName||"Resident");
+  document.getElementById("loginScreen").style.display="none";
+  document.getElementById("appScreen").style.display="block";
+  sessionStorage.setItem("flat",flat);
+  await loadMaintenance(flat);
+ }catch(e){err.textContent="Firebase error: "+e.message;err.style.display="block";}
+ finally{btn.disabled=false;btn.textContent="Login";}
 }
 
-window.logout=()=>{
-  sessionStorage.removeItem("flat");
-  document.getElementById("appScreen").style.display="none";
-  document.getElementById("loginScreen").style.display="flex";
-  document.getElementById("loginPin").value="";
-};
+async function loadMaintenance(flat){
+ const status=document.getElementById("dbStatus");
+ try{
+  const snap=await getDoc(doc(db,"maintenance","2026-10_"+flat));
+  if(!snap.exists()){status.textContent="Maintenance record not found.";status.className="error";return;}
+  const d=snap.data();
+  const amount=Number(d.amount||0).toLocaleString("en-IN");
+  const month=d.month||"October 2026",due=d.dueDate||"—",st=String(d.status||"pending");
+  document.getElementById("homeMonth").textContent=month;
+  document.getElementById("homeAmount").textContent="₹"+amount;
+  document.getElementById("homeDueDate").textContent=due;
+  document.getElementById("payMonth").textContent=month;
+  document.getElementById("payAmount").textContent="₹"+amount;
+  document.getElementById("payDueDate").textContent=due;
+  setStatus("homeStatus",st);setStatus("payStatus",st);
+  status.textContent="✓ Firebase connected";status.className="loading";
+ }catch(e){status.textContent="Maintenance error: "+e.message;status.className="error";}
+}
 
-window.show=(id,el)=>{
-  document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-  document.querySelectorAll(".nav button").forEach(x=>x.classList.remove("active"));
-  if(el)el.classList.add("active");
-  else{
-    const m={home:0,maintenance:1,chat:2,notices:3};
-    document.querySelectorAll(".nav button")[m[id]].classList.add("active");
-  }
-};
+function setStatus(id,st){
+ const el=document.getElementById(id);
+ el.textContent=st.toUpperCase();
+ el.className="badge"+(st.toLowerCase()==="pending"?" pending":"");
+}
+
+window.logout=()=>{sessionStorage.removeItem("flat");currentFlat="";document.getElementById("appScreen").style.display="none";document.getElementById("loginScreen").style.display="flex";document.getElementById("loginPin").value="";};
+window.show=(id,el)=>{document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));document.getElementById(id).classList.add("active");document.querySelectorAll(".nav button").forEach(x=>x.classList.remove("active"));if(el)el.classList.add("active");else{const m={home:0,maintenance:1,chat:2,notices:3};document.querySelectorAll(".nav button")[m[id]].classList.add("active");}};
 window.demoPay=()=>alert("Demo only — real UPI payment will be added after Firebase testing.");
 </script>
 </body>
