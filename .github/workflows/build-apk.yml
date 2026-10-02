@@ -1,0 +1,47 @@
+name: Build Android APK
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "*.zip"
+      - ".github/workflows/build-apk.yml"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Find and extract Android project
+        run: |
+          ZIP=$(find . -maxdepth 1 -name "*.zip" | head -1)
+          echo "Using ZIP: $ZIP"
+          unzip -q "$ZIP"
+          PROJECT=$(find . -maxdepth 2 -name "settings.gradle" -printf "%h\n" | head -1)
+          echo "Project: $PROJECT"
+          echo "PROJECT=$PROJECT" >> $GITHUB_ENV
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.13"
+
+      - name: Build APK
+        run: |
+          cd "$PROJECT"
+          gradle assembleDebug --no-daemon
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: SRK-Sri-Sai-Heights-APK
+          path: "**/build/outputs/apk/debug/*.apk"
